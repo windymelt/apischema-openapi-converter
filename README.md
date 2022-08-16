@@ -1,8 +1,3 @@
-## sbt project compiled with Scala 3
+<h1 align="center">apischema-openapi-converter</h1>
 
-### Usage
-
-This is a normal sbt project. You can compile code with `sbt compile`, run it with `sbt run`, and `sbt console` will start a Scala 3 REPL.
-
-For more information on the sbt-dotty plugin, see the
-[scala3-example-project](https://github.com/scala/scala3-example-project/blob/main/README.md).
+<p align="center"><i>爆速無抵抗変換ツール</i></p>
