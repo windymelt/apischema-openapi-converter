@@ -71,7 +71,6 @@ resource figure => {
             example => 1.6,
         },
     },
-    required => ['weight', 'height'],
 };
 
 resource bmi => {
@@ -84,7 +83,19 @@ resource bmi => {
             example => 19.5,
         },
     },
-    required => ['value'],
 };
 """
 new DefParser(in11).Resources.run()
+
+val in12 = "[qw( foo )]"
+new DefParser(in12).ArrayVal.run()
+
+val in13 = """resource foo => { one => [qw(i have a dream)],};
+resource bar => {};"""
+new DefParser(in13).Resources.run()
+
+val in14 = "{  }, {  }"
+new DefParser(in14).HashList.run()
+
+val in15 = "[ { foo => 1 }, {bar => 3} ]"
+new DefParser(in15).ArrayVal.run()
