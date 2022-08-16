@@ -1,6 +1,6 @@
 import org.parboiled2._
 
-import windymelt.a20._
+import windymelt.a2o._
 
 val in1 = "foo_bar"
 new DefParser(in1).ResourceName.run()
@@ -28,3 +28,63 @@ new DefParser(in8).Hash.run()
 
 val in9 = "{ one => 1, two => 2 }"
 new DefParser(in9).Hash.run()
+
+val in91 = """{ one => 1,
+  two => 2 }
+  """
+new DefParser(in91).Hash.run()
+
+val in10 = """
+resource figure => {
+    type => 'object',
+    description => 'Figure, which includes weight and height',
+    properties => {
+        weight  => {
+            type => 'number',
+            description => 'Weight(kg)',
+            example => 50,
+        },
+        height  => {
+            type => 'number',
+            description => 'Height(m)',
+            example => 1.6,
+        },
+    },
+    required => ['weight', 'height'],
+};
+"""
+new DefParser(in10).Resource.run()
+
+val in11 = """
+resource figure => {
+    type => 'object',
+    description => 'Figure, which includes weight and height',
+    properties => {
+        weight  => {
+            type => 'number',
+            description => 'Weight(kg)',
+            example => 50,
+        },
+        height  => {
+            type => 'number',
+            description => 'Height(m)',
+            example => 1.6,
+        },
+    },
+    required => ['weight', 'height'],
+};
+
+resource bmi => {
+    type => 'object',
+    description => 'Body mass index',
+    properties => {
+        value  => {
+            type => 'number',
+            description => 'bmi value',
+            example => 19.5,
+        },
+    },
+    required => ['value'],
+};
+"""
+new DefParser(in11).Resources.run()
