@@ -62,7 +62,7 @@ class DefParser(val input: ParserInput) extends Parser {
   }
 
   def ArrayVal: Rule1[Syntax.ArrayVal] = rule {
-    "[" ~ (QWList | StrList | HashList) ~ "]" ~> ((sth: Seq[Syntax.HashVal]) =>
+    "[" ~ (QWList | HashList | StrList) ~ "]" ~> ((sth: Seq[Syntax.HashVal]) =>
       Syntax.ArrayVal(sth)
     )
   }
@@ -72,10 +72,10 @@ class DefParser(val input: ParserInput) extends Parser {
     )
   }
   def StrList: Rule1[Seq[Syntax.HashVal]] = rule {
-    (StringVal * ",") ~ ",".? ~ Spaces
+    (StringVal + ",") ~ ",".? ~ Spaces
   }
   def HashList: Rule1[Seq[Syntax.HashVal]] = rule {
-    (Hash * ",") ~ ",".? ~ Spaces
+    (Hash + ",") ~ ",".? ~ Spaces
   }
   def ResourceKeyword = rule { "resource" }
   def ResourceName = rule { capture(AlNumBar) }
