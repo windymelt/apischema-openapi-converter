@@ -1,6 +1,6 @@
 import org.parboiled2._
 
-import windymelt.a2o._
+import windymelt.a2o.parser._
 
 val in1 = "foo_bar"
 new DefParser(in1).ResourceName.run()

@@ -1,18 +1,6 @@
-package windymelt.a2o
+package windymelt.a2o.parser
 
 import org.parboiled2._
-import org.parboiled2.support.hlist.HNil
-
-object Syntax {
-  sealed trait HashVal
-  case class StringVal(s: String) extends HashVal
-  case class IntVal(i: Int) extends HashVal
-  case class DoubleVal(d: Double) extends HashVal
-  case class ArrayVal(arr: Seq[HashVal]) extends HashVal
-  case class Hash(hs: Seq[HashRow]) extends HashVal
-  case class HashRow(key: String, value: HashVal)
-  case class Resource(name: String, hash: Hash)
-}
 
 class DefParser(val input: ParserInput) extends Parser {
   def Spaces: Rule0 = rule { anyOf(" \n").* }
@@ -83,42 +71,4 @@ class DefParser(val input: ParserInput) extends Parser {
   def AlNumBar = rule {
     (CharPredicate.Digit | CharPredicate.Alpha | '_' | '$').+
   }
-}
-
-object Main extends App {
-  def sampleSchema: String = """
-  resource figure => {
-    type => 'object',
-    description => 'Figure, which includes weight and height',
-    properties => {
-        weight  => {
-            type => 'number',
-            description => 'Weight(kg)',
-            example => 50,
-        },
-        height  => {
-            type => 'number',
-            description => 'Height(m)',
-            example => 1.6,
-        },
-    },
-    required => ['weight', 'height'],
-};
-
-resource bmi => {
-    type => 'object',
-    description => 'Body mass index',
-    properties => {
-        value  => {
-            type => 'number',
-            description => 'bmi value',
-            example => 19.5,
-        },
-    },
-    required => ['value'],
-};
-  """
-
-  println("Hello world!")
-  println(new DefParser(sampleSchema).Resources.run())
 }
