@@ -56,13 +56,13 @@ class DefParser(val input: ParserInput) extends Parser {
       )
     }
 
-    def DoubleVal = rule {
-      capture(
-        oneOrMore(CharPredicate.Digit) ~ str(".") ~ oneOrMore(
-          CharPredicate.Digit
-        )
-      ) ~> (s => Syntax.DoubleVal(s.toDouble))
-    }
+  def DoubleVal = rule {
+    capture(
+      oneOrMore(CharPredicate.Digit) ~ str(".") ~ oneOrMore(
+        CharPredicate.Digit
+      )
+    ) ~> (s => Syntax.DoubleVal(s.toDouble))
+  }
 
   def ArrayVal: Rule1[Syntax.ArrayVal] = rule {
     "[" ~ (QWList | StrList) ~ "]" ~> (sth => Syntax.ArrayVal(sth))
@@ -116,9 +116,7 @@ resource bmi => {
     required => ['value'],
 };
   """
-  def hello: Unit =
-    println("Hello world!")
-    println(msg)
 
-  def msg = "I was compiled by Scala 3. :)"
+  println("Hello world!")
+  println(new DefParser(sampleSchema).Resources.run())
 }
