@@ -9,4 +9,5 @@ object Syntax {
   case class Hash(hs: Seq[HashRow]) extends HashVal
   case class HashRow(key: String, value: HashVal)
   case class Resource(name: String, hash: Hash)
+  case class Endpoint(method: String, endpoint: StringVal, hash: Hash)
 }

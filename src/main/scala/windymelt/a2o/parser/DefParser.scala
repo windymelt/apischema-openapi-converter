@@ -18,6 +18,12 @@ class DefParser(val input: ParserInput) extends Parser {
   def ResourceHeader = rule {
     ResourceKeyword ~ ResourceName ~ Spaces ~ FatComma
   }
+  def Endpoints: Rule1[Seq[Syntax.Endpoint]] = rule {
+    Spaces ~ Endpoint.+ ~ Spaces ~ EOI
+  }
+  def Endpoint = rule {
+    Spaces ~ EndpointMethod ~ StringVal ~ FatComma ~ Hash ~ ";" ~> ((m, e, h) => Syntax.Endpoint(m, e, h))
+  }
   def Hash: Rule1[Syntax.Hash] = rule {
     "+".? ~ "{" ~ (HashRow * ",") ~ ",".? ~ Spaces ~ "}" ~>
       (hs => Syntax.Hash(hs))
@@ -67,6 +73,7 @@ class DefParser(val input: ParserInput) extends Parser {
   }
   def ResourceKeyword = rule { "resource" }
   def ResourceName = rule { capture(AlNumBar) }
+  def EndpointMethod = rule { capture(str("GET") | str("POST") | str("PUT") | str("DELETE")) ~ Spaces }
   def FatComma: Rule0 = rule { "=>" }
   def AlNumBar = rule {
     (CharPredicate.Digit | CharPredicate.Alpha | '_' | '$').+

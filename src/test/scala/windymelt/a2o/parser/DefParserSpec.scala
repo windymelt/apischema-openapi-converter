@@ -66,4 +66,26 @@ class DefParserSpec extends AnyFlatSpec with Matchers {
       ))
     )
   }
+
+  "EndpointMethod" should "match method names" in {
+    val get = "GET"
+    val post = "POST"
+    val put = "PUT"
+    val delete = "DELETE"
+
+    Seq(get, post, put, delete) foreach { m =>
+      (new DefParser(m).EndpointMethod.run()) shouldBe Success(m)
+    }
+  }
+
+  "Endpoint" should "match endpoint notation" in {
+    val x = """POST '/bmi' => {
+    title           => 'BMI API',
+};"""
+    new DefParser(x).Endpoint.run() shouldBe Success(
+      Syntax.Endpoint("POST", Syntax.StringVal("/bmi"), Syntax.Hash(
+        Seq(Syntax.HashRow("title", Syntax.StringVal("BMI API")))
+      ))
+    )
+  }
 }
