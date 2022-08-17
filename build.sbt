@@ -8,6 +8,7 @@ lazy val root = project
     scalaVersion := sv,
     libraryDependencies ++= Seq(
       "org.parboiled" %% "parboiled" % "2.4.0",
-      "org.scalameta" %% "munit" % "0.7.29" % Test
+      "org.scalactic" %% "scalactic" % "3.2.13",
+      "org.scalatest" %% "scalatest" % "3.2.13" % Test,
     )
   )

@@ -33,7 +33,7 @@ class DefParser(val input: ParserInput) extends Parser {
     StringVal | DoubleVal | IntVal | ArrayVal | Hash
   }
   def StringVal = rule {
-    str("'") ~ capture(noneOf("'\n").*) ~ "'" ~> (sth => Syntax.StringVal(sth))
+    (str("'") ~ capture(noneOf("'\n").*) ~ "'" | str("\"") ~ capture(noneOf("\"\"\n").*) ~ "\"" ) ~> (sth => Syntax.StringVal(sth))
   }
   def IntVal =
     rule {
